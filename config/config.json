@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "service-desk-chat-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/serviceDeskChat/ServiceDeskChatWebPart.js",
+          "manifest": "./src/webparts/serviceDeskChat/ServiceDeskChatWebPart.manifest.json"
+        }
+      ]
+    },
+    "bubble-chat-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/bubbleChat/BubbleChatApplicationCustomizer.js",
+          "manifest": "./src/extensions/bubbleChat/BubbleChatApplicationCustomizer.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ServiceDeskChatWebPartStrings": "lib/webparts/serviceDeskChat/loc/{locale}.js",
+    "BubbleChatApplicationCustomizerStrings": "lib/extensions/bubbleChat/loc/{locale}.js"
+  }
+}

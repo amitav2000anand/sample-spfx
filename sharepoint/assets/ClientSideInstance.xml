@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <ClientSideComponentInstance
+    Title="BubbleChat"
+    Location="ClientSideExtension.ApplicationCustomizer"
+    ComponentId="6884b891-ab15-4bc6-b67e-b45a233cdd5f"
+    Properties="{&quot;testMessage&quot;:&quot;Hello from Application Customizer&quot;}">
+  </ClientSideComponentInstance>
+</Elements>

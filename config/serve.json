@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "initialPage": "https://{tenantDomain}/_layouts/workbench.aspx",
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://{tenantDomain}/_layouts/workbench.aspx",
+      "customActions": {
+        "6884b891-ab15-4bc6-b67e-b45a233cdd5f": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "botURL": "https://6a01bb625327e44cb82093cb461179.04.environment.api.powerplatform.com/powervirtualagents/botsbyschema/sdagent_serviceDeskChatbot/directline/token?api-version=2022-03-01-preview",
+            "botName": "Service Desk Chatbot - Local",
+            "buttonLabel": "Chat Now",
+            "userEmail": "",
+            "botAvatarImage": "",
+            "botAvatarInitials": "SD",
+            "greet": true,
+            "customScope": "api://botid-040e72ea-ea1c-4c31-8212-d4873d36b1e2/SSA.Read",
+            "clientID": "a987856e-0dcd-44af-9da4-2919b028e4fe",
+            "authority": "https://login.microsoftonline.com/azureextraspace.onmicrosoft.com"
+          }
+        }
+      }
+    },
+    "bubbleChat": {
+      "pageUrl": "https://azureextraspace.sharepoint.com/sites/SelfServiceAgent/SitePages/Service-Desk-Chatbot-DEV.aspx",
+      "customActions": {
+        "6884b891-ab15-4bc6-b67e-b45a233cdd5f": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "botURL": "https://6a01bb625327e44cb82093cb461179.04.environment.api.powerplatform.com/powervirtualagents/botsbyschema/sdagent_serviceDeskChatbot/directline/token?api-version=2022-03-01-preview",
+            "botName": "Service Desk Chatbot - Local",
+            "buttonLabel": "Chat Now",
+            "userEmail": "",
+            "botAvatarImage": "",
+            "botAvatarInitials": "SD",
+            "greet": true,
+            "customScope": "api://botid-040e72ea-ea1c-4c31-8212-d4873d36b1e2/SSA.Read",
+            "clientID": "a987856e-0dcd-44af-9da4-2919b028e4fe",
+            "authority": "https://login.microsoftonline.com/azureextraspace.onmicrosoft.com"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+.chatDialog {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 90vw;         // responsive width
+  max-width: 520px;    // desktop cap
+  height: 80vh;        // responsive height
+  max-height: 680px;   // desktop cap
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatHeader {
+  background-color: #91C717;
+  color: #fff;
+  padding: 14px 18px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .closeButton {
+    cursor: pointer;
+    font-size: 26px;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #eaeaea;
+    }
+  }
+}
+
+.chatBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  > div {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toggleButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #91C717;
+  color: #fff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: #54565b;
+    color: #fff;
+  }
+
+  i {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 600px) {
+  .chatDialog {
+    bottom: 10px;
+    right: 10px;
+    width: 95vw;
+    height: 85vh;
+    max-width: none;
+    max-height: none;
+  }
+}
