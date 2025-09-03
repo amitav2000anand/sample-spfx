@@ -10,36 +10,36 @@
         "6884b891-ab15-4bc6-b67e-b45a233cdd5f": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "botURL": "https://6a01bb625327e44cb82093cb461179.04.environment.api.powerplatform.com/powervirtualagents/botsbyschema/sdagent_serviceDeskChatbot/directline/token?api-version=2022-03-01-preview",
+            "botURL": "https://6a0383e2ebc3ee40bdc9d05198285a.12.environment.api.powerplatform.com/powervirtualagents/botsbyschema/crfb3_selfServiceAgent/directline/token?api-version=2022-03-01-preview",
             "botName": "Service Desk Chatbot - Local",
             "buttonLabel": "Chat Now",
             "userEmail": "",
             "botAvatarImage": "",
             "botAvatarInitials": "SD",
             "greet": true,
-            "customScope": "api://botid-040e72ea-ea1c-4c31-8212-d4873d36b1e2/SSA.Read",
-            "clientID": "a987856e-0dcd-44af-9da4-2919b028e4fe",
-            "authority": "https://login.microsoftonline.com/azureextraspace.onmicrosoft.com"
+            "customScope": "api://27eb69cb-53e6-40db-8533-dfa804dca4ac/Sites.Read",
+            "clientID": "4ffd1a7a-9a30-48a9-bc3d-51060e46591b",
+            "authority": "https://login.microsoftonline.com/s63fb.onmicrosoft.com"
           }
         }
       }
     },
     "bubbleChat": {
-      "pageUrl": "https://azureextraspace.sharepoint.com/sites/SelfServiceAgent/SitePages/Service-Desk-Chatbot-DEV.aspx",
+      "pageUrl": "https://{tenantDomain}/sites/SelfServiceAgent/SitePages/lester-test.aspx",
       "customActions": {
         "6884b891-ab15-4bc6-b67e-b45a233cdd5f": {
           "location": "ClientSideExtension.ApplicationCustomizer",
           "properties": {
-            "botURL": "https://6a01bb625327e44cb82093cb461179.04.environment.api.powerplatform.com/powervirtualagents/botsbyschema/sdagent_serviceDeskChatbot/directline/token?api-version=2022-03-01-preview",
+            "botURL": "https://6a0383e2ebc3ee40bdc9d05198285a.12.environment.api.powerplatform.com/powervirtualagents/botsbyschema/crfb3_selfServiceAgent/directline/token?api-version=2022-03-01-preview",
             "botName": "Service Desk Chatbot - Local",
             "buttonLabel": "Chat Now",
             "userEmail": "",
             "botAvatarImage": "",
             "botAvatarInitials": "SD",
             "greet": true,
-            "customScope": "api://botid-040e72ea-ea1c-4c31-8212-d4873d36b1e2/SSA.Read",
-            "clientID": "a987856e-0dcd-44af-9da4-2919b028e4fe",
-            "authority": "https://login.microsoftonline.com/azureextraspace.onmicrosoft.com"
+            "customScope": "api://27eb69cb-53e6-40db-8533-dfa804dca4ac/Sites.Read",
+            "clientID": "4ffd1a7a-9a30-48a9-bc3d-51060e46591b",
+            "authority": "https://login.microsoftonline.com/s63fb.onmicrosoft.com"
           }
         }
       }

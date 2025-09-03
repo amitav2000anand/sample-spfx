@@ -1,7 +1,5 @@
 name: "Deploy SSPKG"
 
-# This workflow will trigger on one of two conditions - pushes to the main branch or a  "workflow_dispatch"
-# Workflow dispatch is used manually initiate the actions. This is extremely useful during the testing phases.
 on:
   push:
     branches:
@@ -9,16 +7,17 @@ on:
       - "feat/ci"
   workflow_dispatch:
 
-# Variables that are available for all the jobs in the workflow
-# Depending on the use-case, the package name could be passed from the pipeline.
 env:
   PACKAGE: "it-self-service2.sppkg"
+  APP_CATALOG: "https://s63fb.sharepoint.com/sites/appcatalog"
 
-# Here we kick off the job and select a runner.
-# I chose Ubuntu for reliability and cost-effectiveness.
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   spfx-gulp:
-    name: "SPFX Gulp"
+    name: "SPPKG Deployment"
     runs-on: ubuntu-latest
 
     steps:
@@ -30,16 +29,12 @@ jobs:
         with:
           node-version: 22.x
 
-      # NPM will be installed.
-      # Using the ci switch instead of i as this is a non-interactive workflow.
       - name: NPM install
         run: npm ci
 
-      # Gulp global installation.
       - name: Gulp install
         run: npm i -g gulp
 
-      # These gulp commands output a .sspkg package.
       - name: Gulp package
         run: |
           gulp bundle --ship
@@ -53,10 +48,27 @@ jobs:
           APP_ID: ${{ secrets.APP_ID }}
           # ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           # ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          # CERTIFICATE_ENCODED: ${{ secrets.CERTIFICATE_ENCODED }}
+          # CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
 
-      - name: Deploy app to a site collection
-        uses: pnp/action-cli-deploy@v5
-        with:
-          APP_FILE_PATH: sharepoint/solution/${{ env.PACKAGE }}
-          SCOPE: sitecollection
-          SITE_COLLECTION_URL: https://s63fb.sharepoint.com/sites/SelfSeviceAgent
+      # - name: Check tenant app catalog URL
+      #   run: |
+      #     m365 spo tenant appcatalogurl get --output text
+      #   shell: bash
+
+      - name: Register the app in the App Catalog
+        run: |
+          m365 spo app add \
+            --filePath sharepoint/solution/${{ env.PACKAGE }} \
+            --overwrite \
+            --appCatalogUrl "${{ env.APP_CATALOG }}" \
+            --output json
+        shell: bash
+
+      - name: Deploy app
+        run: |
+          m365 spo app deploy \
+            --name ${{ env.PACKAGE }} \
+            --appCatalogUrl "${{ env.APP_CATALOG }}" \
+            --skipFeatureDeployment
+        shell: bash

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactWebChat from "botframework-webchat";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { Dispatch } from "redux";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./BubbleChatDialog.module.scss"; // ✅ SCSS file for styling
 import { IconButton } from "office-ui-fabric-react/lib/Button";
 import { IBubbleChatProps } from "./IBubbleChatProps";
@@ -11,7 +11,6 @@ import MSALWrapper from "../../../utils/MSALWrapper";
 export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
   props,
 ) => {
-
   //const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -29,6 +28,8 @@ export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
   // Using refs instead of IDs to get the webchat and loading spinner elements
   const webChatRef = useRef<HTMLDivElement>(null);
   const loadingSpinnerRef = useRef<HTMLDivElement>(null);
+
+  const [directlineInstance, setDirectlineInstance] = useState<any>(null);
 
   // A utility function that extracts the OAuthCard resource URI from the incoming activity or return undefined
   function getOAuthCardResourceUri(activity: any): string | undefined {
@@ -85,6 +86,7 @@ export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
         token: conversationInfo.token,
         domain: regionalChannelURL + "v3/directline",
       });
+      setDirectlineInstance(directline);
     } else {
       console.error(`HTTP error! Status: ${response.status}`);
     }
@@ -93,81 +95,81 @@ export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
       {},
       ({ dispatch }: { dispatch: Dispatch }) =>
         (next: any) =>
-          (action: any) => {
-            // Checking whether we should greet the user
-            if (props.greet) {
-              if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
-                console.log("Action:" + action.type);
-                dispatch({
-                  meta: {
-                    method: "keyboard",
+        (action: any) => {
+          // Checking whether we should greet the user
+          if (props.greet) {
+            if (action.type === "DIRECT_LINE/CONNECT_FULFILLED") {
+              console.log("Action:" + action.type);
+              dispatch({
+                meta: {
+                  method: "keyboard",
+                },
+                payload: {
+                  activity: {
+                    channelData: {
+                      postBack: true,
+                    },
+                    //Web Chat will show the 'Greeting' System Topic message which has a trigger-phrase 'hello'
+                    name: "startConversation",
+                    type: "event",
                   },
-                  payload: {
-                    activity: {
-                      channelData: {
-                        postBack: true,
-                      },
-                      //Web Chat will show the 'Greeting' System Topic message which has a trigger-phrase 'hello'
-                      name: "startConversation",
-                      type: "event",
-                    },
-                  },
-                  type: "DIRECT_LINE/POST_ACTIVITY",
-                });
-                return next(action);
-              }
-            }
-
-            // Checking whether the bot is asking for authentication
-            if (action.type === "DIRECT_LINE/INCOMING_ACTIVITY") {
-              const activity = action.payload.activity;
-              if (
-                activity.from &&
-                activity.from.role === "bot" &&
-                getOAuthCardResourceUri(activity)
-              ) {
-                directline
-                  .postActivity({
-                    type: "invoke",
-                    name: "signin/tokenExchange",
-                    value: {
-                      id: activity.attachments[0].content.tokenExchangeResource
-                        .id,
-                      connectionName:
-                        activity.attachments[0].content.connectionName,
-                      token,
-                    },
-                    from: {
-                      id: props.userEmail,
-                      name: props.userFriendlyName,
-                      role: "user",
-                    },
-                  })
-                  .subscribe(
-                    (id: any) => {
-                      if (id === "retry") {
-                        // bot was not able to handle the invoke, so display the oauthCard (manual authentication)
-                        console.log(
-                          "bot was not able to handle the invoke, so display the oauthCard",
-                        );
-                        return next(action);
-                      }
-                    },
-                    (error: any) => {
-                      // an error occurred to display the oauthCard (manual authentication)
-                      console.log("An error occurred so display the oauthCard");
-                      return next(action);
-                    },
-                  );
-                // token exchange was successful, do not show OAuthCard
-                return;
-              }
-            } else {
+                },
+                type: "DIRECT_LINE/POST_ACTIVITY",
+              });
               return next(action);
             }
+          }
 
+          // Checking whether the bot is asking for authentication
+          if (action.type === "DIRECT_LINE/INCOMING_ACTIVITY") {
+            const activity = action.payload.activity;
+            if (
+              activity.from &&
+              activity.from.role === "bot" &&
+              getOAuthCardResourceUri(activity)
+            ) {
+              directline
+                .postActivity({
+                  type: "invoke",
+                  name: "signin/tokenExchange",
+                  value: {
+                    id: activity.attachments[0].content.tokenExchangeResource
+                      .id,
+                    connectionName:
+                      activity.attachments[0].content.connectionName,
+                    token,
+                  },
+                  from: {
+                    id: props.userEmail,
+                    name: props.userFriendlyName,
+                    role: "user",
+                  },
+                })
+                .subscribe(
+                  (id: any) => {
+                    if (id === "retry") {
+                      // bot was not able to handle the invoke, so display the oauthCard (manual authentication)
+                      console.log(
+                        "bot was not able to handle the invoke, so display the oauthCard",
+                      );
+                      return next(action);
+                    }
+                  },
+                  (error: any) => {
+                    // an error occurred to display the oauthCard (manual authentication)
+                    console.log("An error occurred so display the oauthCard");
+                    return next(action);
+                  },
+                );
+              // token exchange was successful, do not show OAuthCard
+              return;
+            }
+          } else {
             return next(action);
-          },
+          }
+
+          return next(action);
+        },
     );
 
     // hide the upload button - other style options can be added here
@@ -195,47 +197,69 @@ export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
     }
   };
 
-return (
-  <>
-    {isOpen && (
-      <div className={styles.chatDialog}>
-        {/* Header */}
-        <div className={styles.chatHeader}>
-          <span>{props.botName}</span>
-          <button
-            className={styles.closeButton}
-            onClick={() => setIsOpen(false)}
-          >
-            ×
-          </button>
-        </div>
+  const handleStartOver = (): void => {
+    if (directlineInstance) {
+      directlineInstance
+        .postActivity({
+          type: "event",
+          name: "StartOver", // Your bot must handle this
+          from: { id: props.userEmail, name: props.userFriendlyName },
+        })
+        .subscribe(
+          (id: any) => console.log("Start Over event sent:", id),
+          (error: any) =>
+            console.error("Error sending Start Over event:", error),
+        );
+    }
+  };
 
-        {/* Chat body */}
-        <div className={styles.chatBody}>
-          <div ref={webChatRef}></div>
-          <div ref={loadingSpinnerRef} className={styles.loadingOverlay}>
-            <Spinner label="Loading..." />
+  return (
+    <>
+      {isOpen && (
+        <div className={styles.chatDialog}>
+          {/* Header */}
+          <div className={styles.chatHeader}>
+            <span>{props.botName}</span>
+            <div>
+              <button
+                className={styles.startOverButton}
+                onClick={handleStartOver}
+              >
+                Start Over
+              </button>
+
+              <button
+                className={styles.closeButton}
+                onClick={() => setIsOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
+          {/* Chat body */}
+          <div className={styles.chatBody}>
+            <div ref={webChatRef}></div>
+            <div ref={loadingSpinnerRef} className={styles.loadingOverlay}>
+              <Spinner label="Loading..." />
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {/* Floating toggle button */}
-    <IconButton
-      className={styles.toggleButton}
-      iconProps={{ iconName: "Chat" }}
-      title="Chat Now"
-      ariaLabel="Chat Now"
-      onClick={() => {
-        setIsOpen(!isOpen);
-        if (!isOpen) handleLayerDidMount();
-      }}
-    />
-  </>
-);
-
-
-
+      {/* Floating toggle button */}
+      <IconButton
+        className={styles.toggleButton}
+        iconProps={{ iconName: "Chat" }}
+        title="Chat Now"
+        ariaLabel="Chat Now"
+        onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isOpen) handleLayerDidMount();
+        }}
+      />
+    </>
+  );
 };
 
 export default class Chatbot extends React.Component<IBubbleChatProps> {
@@ -243,8 +267,6 @@ export default class Chatbot extends React.Component<IBubbleChatProps> {
     super(props);
   }
   public render(): JSX.Element {
-    return (
-      <BubbleChatDialog {...this.props} />
-    );
+    return <BubbleChatDialog {...this.props} />;
   }
 }
