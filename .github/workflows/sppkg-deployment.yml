@@ -1,0 +1,61 @@
+name: "Deploy SSPKG"
+
+# This workflow will trigger on one of two conditions - pushes to the main branch or a  "workflow_dispatch"
+# Workflow dispatch is used manually initiate the actions. This is extremely useful during the testing phases.
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+# Variables that are available for all the jobs in the workflow
+# Depending on the use-case, the package name could be passed from the pipeline.
+env:
+  PACKAGE: "it-self-service"
+
+# Here we kick off the job and select a runner.
+# I chose Ubuntu for reliability and cost-effectiveness.
+jobs:
+  spfx-gulp:
+    name: "SPFX Gulp"
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Node.js install
+        uses: actions/setup-node@v1
+        with:
+          node-version: 22.16
+
+      # NPM will be installed.
+      # Using the ci switch instead of i as this is a non-interactive workflow.
+      - name: NPM install
+        run: npm ci
+
+      # Gulp global installation.
+      - name: Gulp install
+        run: npm i -g gulp
+
+      # These gulp commands output a .sspkg package.
+      - name: Gulp package
+        run: |
+          gulp bundle --ship
+          gulp package-solution --ship
+
+      - name: M365 login
+        id: login
+        uses: pnp/action-cli-login@v2.2.1
+        with:
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
+      # Deploy package to tenant using action-cli-deploy
+      # https://github.com/pnp/action-cli-deploy
+      - name: SharePoint deploy
+        id: deploy
+        uses: pnp/action-cli-deploy@v3.0.1
+        with:
+          APP_FILE_PATH: ./sharepoint/solution/${{ env.PACKAGE }}
+          OVERWRITE: true
