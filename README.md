@@ -71,3 +71,27 @@ This extension illustrates the following concepts:
 - [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
 - [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
 - [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+
+## Permission Prerequisites
+- Create an App Registration
+  - Go to Azure Portal.
+  - Navigate to Azure Active Directory > App registrations > New registration.
+  - Provide a name (e.g., GitHub-SPFx-Deploy).
+  - Set Supported account types to Single tenant (or as needed).
+  - Click Register.
+- Add a Federated Credentials in **Certificate & Secrets** : In your App Registration, go to Certificates & secrets > Federated credentials > Add credential.
+  - Federated credential scenario: **GitHub Actions deploying Azure resources**
+  - Organization: Your GitHub org (e.g., **amitav2000anand**)
+  - Repository: Your repo name (e.g., **sample-spfx**)
+  - Entity type: **Branch**
+  - Branch: **main** 
+  - Subject identifier: repo:amitav2000anand/sample-spfx:ref:refs/heads/main
+  - Update Name & Description in **Credential details** section
+  - Save the credential.
+- Add required permissions in API **Permission** : Go to API permissions > Add a permission > Microsoft Graph and SharePoint
+  - Microsoft Graph
+    - AppCatalog.ReadWrite.All
+    - Sites.FullControl.All
+    - User.Read
+  - SharePoint
+    - Sites.FullControl.All
