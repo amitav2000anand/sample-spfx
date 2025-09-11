@@ -7,10 +7,10 @@ on:
   #     - "feat/ci"
   workflow_dispatch:
     inputs:
-      componentId:
-        description: "Component Id"
+      appId:
+        description: "The id from the package-solution.json"
         required: true
-        default: "6884b891-ab15-4bc6-b67e-b45a233cdd5f"
+        default: "105f66d9-0260-4c5d-819c-fb7e70a9b213"
 
 env:
   PACKAGE: "it-self-service2.sppkg"
