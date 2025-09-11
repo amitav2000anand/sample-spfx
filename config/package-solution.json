@@ -3,7 +3,7 @@
   "solution": {
     "name": "sample-spfx-solution",
     "id": "105f66d9-0260-4c5d-819c-fb7e70a9b213",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -24,20 +24,9 @@
       "screenshotPaths": [],
       "videoUrl": "",
       "categories": []
-    },
-    "features": [
-      {
-        "title": "service-desk-chat Feature",
-        "description": "The feature that activates elements of the service-desk-chat solution.",
-        "id": "2c91e7ff-e44c-4e76-890b-aa83fcff6fa2",
-        "version": "1.0.0.0",
-        "assets": {
-          "elementManifests": ["elements.xml", "ClientSideInstance.xml"]
-        }
-      }
-    ]
+    }
   },
   "paths": {
-    "zippedPackage": "solution/it-self-service2.sppkg"
+    "zippedPackage": "solution/sample-spfx-solution.sppkg"
   }
 }
