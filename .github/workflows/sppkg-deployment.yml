@@ -56,9 +56,26 @@ jobs:
           # CERTIFICATE_ENCODED: ${{ secrets.CERTIFICATE_ENCODED }}
           # CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
 
-      - name: Check custom action list
+      - name: Remove existing BubbleChat custom action (if any)
         run: |
-          m365 spo customaction list --webUrl "https://s63fb.sharepoint.com/sites/SelfServiceAgent"
+          EXISTING_ID=$(m365 spo customaction list --webUrl "https://s63fb.sharepoint.com/sites/SelfServiceAgent" --output json | jq -r '.[] | select(.Name=="BubbleChat") | .Id')
+          if [ "$EXISTING_ID" != "" ]; then
+            echo "Removing existing BubbleChat custom action with ID: $EXISTING_ID"
+            m365 spo customaction remove --webUrl "https://s63fb.sharepoint.com/sites/SelfServiceAgent" --id $EXISTING_ID
+          else
+            echo "No existing BubbleChat custom action found."
+          fi
+        shell: bash
+
+      - name: Register App Customizer on site
+        run: |
+          m365 spo customaction add \
+            --webUrl "https://s63fb.sharepoint.com/sites/SelfServiceAgent" \
+            --location "ClientSideExtension.ApplicationCustomizer" \
+            --title "BubbleChat" \
+            --name "BubbleChat" \
+            --clientSideComponentId 6884b891-ab15-4bc6-b67e-b45a233cdd5f \
+            --clientSideComponentProperties '{"botName":"Service Desk Agent"}'
         shell: bash
 
       - name: Register the app in the App Catalog
