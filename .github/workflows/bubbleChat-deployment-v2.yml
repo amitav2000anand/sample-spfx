@@ -67,10 +67,12 @@ jobs:
       - name: Set BubbleChat Customizer Properties
         run: |
           m365 spo customaction set \
-            --id "${{ github.event.inputs.componentId }}" \
             --webUrl "${{ github.event.inputs.siteUrl }}" \
             --name "BubbleChatCustomizer" \
-            --scope Site \
+            --title "BubbleChat" \
+            --scope "Web" \
+            --location "ClientSideExtension.ApplicationCustomizer" \
+            --clientSideComponentId "${{ github.event.inputs.componentId }}" \
             --clientSideComponentProperties "{
               \"botURL\": \"${{ github.event.inputs.botUrl }}\",
               \"botName\": \"${{ github.event.inputs.botName }}\",

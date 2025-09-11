@@ -225,7 +225,7 @@ export const BubbleChatDialog: React.FunctionComponent<IBubbleChatProps> = (
                 className={styles.startOverButton}
                 onClick={handleStartOver}
               >
-                Start Over
+                Start Over Now
               </button>
 
               <button

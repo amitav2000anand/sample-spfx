@@ -2,9 +2,9 @@
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
     <CustomAction
         Title="BubbleChat"
-        Name="BubbleChat"
         Location="ClientSideExtension.ApplicationCustomizer"
         ClientSideComponentId="6884b891-ab15-4bc6-b67e-b45a233cdd5f"
-        ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Hello from Application Customizer&quot;}">
+        ClientSideComponentProperties="{&quot;testMessage&quot;:&quot;Hello from Application Customizer&quot;}"
+    >
     </CustomAction>
 </Elements>

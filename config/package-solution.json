@@ -24,18 +24,7 @@
       "screenshotPaths": [],
       "videoUrl": "",
       "categories": []
-    },
-    "features": [
-      {
-        "title": "service-desk-chat Feature",
-        "description": "The feature that activates elements of the service-desk-chat solution.",
-        "id": "2c91e7ff-e44c-4e76-890b-aa83fcff6fa2",
-        "version": "1.0.0.0",
-        "assets": {
-          "elementManifests": ["elements.xml", "ClientSideInstance.xml"]
-        }
-      }
-    ]
+    }
   },
   "paths": {
     "zippedPackage": "solution/it-self-service2.sppkg"
