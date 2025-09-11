@@ -58,7 +58,7 @@ jobs:
 
       - name: Check custom action list
         run: |
-          m365 spo customaction list --webUrl "https://s69fb.sharepoint.com/sites/SelfServiceAgent"
+          m365 spo customaction list --webUrl "https://s63fb.sharepoint.com/sites/SelfServiceAgent"
         shell: bash
 
       - name: Register the app in the App Catalog
