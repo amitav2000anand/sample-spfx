@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       componentId:
-      description: "Component Id"
-      required: true
-      default: "6884b891-ab15-4bc6-b67e-b45a233cdd5f"
+        description: "Component Id"
+        required: true
+        default: "6884b891-ab15-4bc6-b67e-b45a233cdd5f"
 
 env:
   PACKAGE: "it-self-service2.sppkg"
