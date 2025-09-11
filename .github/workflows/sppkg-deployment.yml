@@ -6,6 +6,11 @@ on:
   #     - "main"
   #     - "feat/ci"
   workflow_dispatch:
+    inputs:
+      componentId:
+      description: "Component Id"
+      required: true
+      default: "6884b891-ab15-4bc6-b67e-b45a233cdd5f"
 
 env:
   PACKAGE: "it-self-service2.sppkg"
@@ -68,7 +73,7 @@ jobs:
       - name: Deploy app
         run: |
           m365 spo app deploy \
-            --name ${{ env.PACKAGE }} \
+            --id ${{ github.event.inputs.componentId }} \
             --appCatalogUrl "${{ env.APP_CATALOG }}" \
             --skipFeatureDeployment
         shell: bash
