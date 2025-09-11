@@ -58,7 +58,7 @@ jobs:
 
       - name: Check custom action list
         run: |
-          m365 spo customaction list --url "https://yourtenant.sharepoint.com/sites/yoursite"
+          m365 spo customaction list --webUrl "https://s69fb.sharepoint.com/sites/SelfServiceAgent"
         shell: bash
 
       - name: Register the app in the App Catalog
@@ -73,7 +73,7 @@ jobs:
       - name: Deploy app
         run: |
           m365 spo app deploy \
-            --id ${{ github.event.inputs.componentId }} \
+            --id ${{ github.event.inputs.appId }} \
             --appCatalogUrl "${{ env.APP_CATALOG }}" \
             --skipFeatureDeployment
         shell: bash
