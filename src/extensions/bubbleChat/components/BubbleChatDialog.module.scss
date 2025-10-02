@@ -16,28 +16,96 @@
 }
 
 .chatHeader {
-  background-color: #91c717;
+  background-color: #91C717;
   color: #fff;
-  padding: 14px 18px;
   font-size: 18px;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
+  padding-left: 10px; // reduced right/left padding (was 10px)
+}
 
-  .closeButton {
-    cursor: pointer;
-    font-size: 26px;
-    line-height: 1;
-    background: transparent;
-    border: none;
-    color: #fff;
-    transition: color 0.2s ease;
+.chatAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-right: 6px; // tighter gap with title
 
-    &:hover {
-      color: #eaeaea;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
+}
+
+.chatTitle {
+  flex-grow: 1;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.startOverButton {
+  background-color: transparent;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  padding: 8px 8px;
+  height: 34px; // aligned with header height
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.closeButton {
+  cursor: pointer;
+  font-size: 35px; // bigger cross
+  line-height: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  //justify-content: center;
+  margin-bottom: 8px; // spacing between Start Over and ×
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #eaeaea;
+  }
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 2px; // smaller gap between buttons
+}
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .chatBody {
@@ -67,7 +135,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #91c717;
+  background-color: #91C717;
   color: #fff;
   border-radius: 50%;
   width: 60px;
@@ -97,20 +165,5 @@
     height: 85vh;
     max-width: none;
     max-height: none;
-  }
-}
-
-.startOverButton {
-  background-color: transparent;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 1rem;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
   }
 }

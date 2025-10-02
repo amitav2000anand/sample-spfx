@@ -37,7 +37,7 @@ export class MSALWrapper {
    * If that fails, it checks the cache for the user account and attempts to acquire a token  */
   public async handleLoggedInUser(
     scopes: string[],
-    userEmail: string,
+    userEmail?: string,
   ): Promise<AuthenticationResult | undefined> {
     await this.ensureInitialized();
     try {
@@ -66,7 +66,7 @@ export class MSALWrapper {
       userAccount =
         accounts.find(
           (account) =>
-            account.username.toLowerCase() === userEmail.toLowerCase(),
+            account.username.toLowerCase() === userEmail?.toLowerCase(),
         ) ?? null;
     } else {
       userAccount = accounts[0];
@@ -89,40 +89,6 @@ export class MSALWrapper {
 
     return undefined;
   }
-  /*
-    public async acquireAccessToken(
-        scopes: string[],
-        userEmail: string,
-    ): Promise<AuthenticationResult | undefined> {
-        await this.ensureInitialized();
-        const accessTokenRequest = {
-            scopes: scopes,
-            loginHint: userEmail,
-        };
-
-        return this.msalInstance
-            .ssoSilent(accessTokenRequest)
-            .then((response) => {
-                return response;
-            })
-            .catch((silentError) => {
-                console.log(silentError);
-                if (silentError instanceof InteractionRequiredAuthError) {
-                    return this.msalInstance
-                        .loginPopup(accessTokenRequest)
-                        .then((response) => {
-                            return response;
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            return undefined;
-                        });
-                }
-                return undefined;
-            });
-    }
-}
-*/
   /* Handles the logged-in user by first attempting to use SSO silent authentication.
   If that fails, it checks the cache for the user account and attempts to acquire a token
   */
