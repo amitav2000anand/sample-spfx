@@ -1,9 +1,9 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "sample-spfx-solution",
+    "name": "ai-itselfservice-solution",
     "id": "105f66d9-0260-4c5d-819c-fb7e70a9b213",
-    "version": "1.0.0.1",
+    "version": "1.1.2.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -16,10 +16,10 @@
     },
     "metadata": {
       "shortDescription": {
-        "default": "ServiceDeskChat description"
+        "default": "Service DeskChat web part and bubble chat extension"
       },
       "longDescription": {
-        "default": "ServiceDeskChat description"
+        "default": "This web part and extension provide an AI-powered chat interface for IT self-service, allowing users to get assistance with common IT issues directly within SharePoint."
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -27,6 +27,6 @@
     }
   },
   "paths": {
-    "zippedPackage": "solution/sample-spfx-solution.sppkg"
+    "zippedPackage": "solution/it-self-service.sppkg"
   }
 }

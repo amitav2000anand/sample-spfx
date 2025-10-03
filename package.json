@@ -1,5 +1,5 @@
 {
-  "name": "sample-spfx",
+  "name": "it-self-service",
   "version": "0.0.1",
   "private": true,
   "engines": {
@@ -10,27 +10,29 @@
     "build": "gulp bundle",
     "clean": "gulp clean",
     "package": "gulp clean && gulp bundle --ship && gulp package-solution --ship",
+    "serve": "gulp clean && gulp build && gulp serve",
     "test": "gulp test"
   },
   "dependencies": {
     "@fluentui/react": "^8.106.4",
+    "@microsoft/decorators": "1.21.1",
+    "@microsoft/sp-application-base": "1.21.1",
     "@microsoft/sp-component-base": "1.21.1",
     "@microsoft/sp-core-library": "1.21.1",
+    "@microsoft/sp-dialog": "1.21.1",
     "@microsoft/sp-lodash-subset": "1.21.1",
     "@microsoft/sp-office-ui-fabric-core": "1.21.1",
     "@microsoft/sp-property-pane": "1.21.1",
     "@microsoft/sp-webpart-base": "1.21.1",
     "@uifabric/react-hooks": "^7.16.4",
     "botframework-webchat": "4.15.9",
+    "markdown-it": "^14.1.0",
     "office-ui-fabric-react": "^7.204.1",
     "p-defer-es5": "^2.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "redux": "^5.0.1",
-    "tslib": "2.3.1",
-    "@microsoft/decorators": "1.21.1",
-    "@microsoft/sp-dialog": "1.21.1",
-    "@microsoft/sp-application-base": "1.21.1"
+    "tslib": "2.3.1"
   },
   "devDependencies": {
     "@microsoft/eslint-config-spfx": "1.21.1",
@@ -39,6 +41,7 @@
     "@microsoft/sp-build-web": "1.21.1",
     "@microsoft/sp-module-interfaces": "1.21.1",
     "@rushstack/eslint-config": "4.0.1",
+    "@types/markdown-it": "^14.1.2",
     "@types/react": "17.0.45",
     "@types/react-dom": "17.0.17",
     "@types/webpack-env": "~1.15.2",

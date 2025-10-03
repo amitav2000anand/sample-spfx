@@ -40,10 +40,8 @@ param (
 
 )
 
-Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Tenant $tenant -CertificateBase64Encoded $certificatePath `
+Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Tenant $tenant -CertificatePath $certificatePath `
   -CertificatePassword (ConvertTo-SecureString $certificatePassword -AsPlainText -Force)
-# Connect-PnPOnline -Url $siteUrl -ClientId $clientId -Tenant $tenant -CertificatePath $certificatePath `
-#   -CertificatePassword (ConvertTo-SecureString $certificatePassword -AsPlainText -Force)
 
 $componentId = "6884b891-ab15-4bc6-b67e-b45a233cdd5f"
 
